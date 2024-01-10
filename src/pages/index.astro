@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+import Navbar from '../components/ui/indexui/NavigationBar.astro';
 import Header from '../components/ui/indexui/Header.astro';
 import Galeria from '../components/ui/indexui/Galeria.astro';
 import Accesos from '../components/ui/indexui/Accesos.astro';
@@ -17,7 +19,7 @@ import Separador from '../components/ui/indexui/separadores/Separador.astro';
 <Layout title="Home">
 	
 	<main>
-
+		<Navbar />
 		<Header />
 		<Separador separador="Accesos" />
 		<Accesos />
