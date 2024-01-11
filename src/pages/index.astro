@@ -14,9 +14,13 @@ import Map from '../components/ui/indexui/Map.astro';
 import Procesos from '../components/ui/indexui/ProcesosDos.astro';
 import Separador from '../components/ui/indexui/separadores/Separador.astro';
 
+const metadata = {
+  title: 'Home',
+  ignoreTitleTemplate: true,
+};
 ---
 
-<Layout>
+<Layout metadata={metadata}>
 	
 	<main>
 
