@@ -1,5 +1,22 @@
 ---
+import ToggleTheme from "../../common/ToggleTheme.astro";
+import type { CallToAction } from "~/types";
 
+
+interface ActionLink extends CallToAction {}
+
+export interface Props {
+  showToggleTheme?: boolean;
+  position?: string;
+  actions?: Array<ActionLink>;
+}
+
+const {
+
+  showToggleTheme = true,
+  position = "center",
+
+} = Astro.props;
 ---
 <nav class="flex justify-between items-center w-full h-min-30 md:h-30  py-2 bg-gray-200 shadow-md sticky top-0 z-50">
   <!-- Logo -->
@@ -32,9 +49,23 @@
     <a href="/contacto" class="px-2 text-lg font-bold hover:text-gray-700">Nosotros</a>
   </div>
   <!-- otros -->
-  <div class="flex hidden md:flex flex-col items-center ">
-    <a href="#" class="px-2 text-lg font-bold hover:text-gray-700">Idioma</a>
-    <a href="#" class="px-2 text-lg font-bold hover:text-gray-700">Modo Oscuro</a>
+  
+  <div class="flex hidden md:flex flex-col mr-20  ">
+    <div
+      class:list={[
+        { "ml-auto rtl:ml-0 rtl:mr-auto": position === "left" },
+        "hidden md:self-center flex md:flex items-center md:mb-0 fixed w-full md:w-auto md:static justify-end left-0 rtl:left-auto rtl:right-0 bottom-0 p-3 md:p-0",
+      ]}
+    >
+    
+      <div class="items-center flex justify-between w-full md:w-auto">
+        <div class="flex">
+          {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 md:w-5 md:h-5 md:inline-block" />}
+        
+        </div>
+       
+      </div>
+    </div>
   </div>
   <!-- Mobile menu button -->
   <button id="menu-toggle" class="absolute md:hidden right-4">
