@@ -1,0 +1,13 @@
+---
+import Formulario from './Formulario.astro';
+import Tarjeta from './TarjetaContacto.astro';
+---
+
+<section>
+    <slot>
+        <div class="md:px-40 mb-3 grid md:grid-cols-2 sm:grid-cols-1  place-content-around place-items-center  gap-1  min-h-96 bg-[#222242] ">
+            <Tarjeta />
+            <Formulario />
+        </div>
+    </slot>
+</section>
