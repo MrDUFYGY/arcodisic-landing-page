@@ -1,16 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-
 import Header from '../components/ui/indexui/Header.astro';
 import Galeria from '../components/ui/indexui/Galeria.astro';
 import Accesos from '../components/ui/indexui/Accesos.astro';
-
 import Contacto from '../components/ui/indexui/ContactoSeccion.astro';
 import Footer from '../components/ui/indexui/FooterPrincipal.astro';
 import Map from '../components/ui/indexui/Map.astro';
-
-
 import Procesos from '../components/ui/indexui/ProcesosDos.astro';
 import Separador from '../components/ui/indexui/separadores/Separador.astro';
 
@@ -33,11 +29,22 @@ const metadata = {
 		<Procesos />
 		<Separador separador="Contacto" />
 		<Contacto />
+	</main>
 		<Separador separador="Mapa" />
 		<Map />
 		<Footer />
-
-	</main>
+		<form name="contact" netlify>
+			<p>
+			  <label>Name <input type="text" name="name" /></label>
+			</p>
+			<p>
+			  <label>Email <input type="email" name="email" /></label>
+			</p>
+			<p>
+			  <button type="submit">Send</button>
+			</p>
+		  </form>
+	
 	 
 	  
 </Layout>
