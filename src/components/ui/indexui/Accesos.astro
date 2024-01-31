@@ -1,0 +1,87 @@
+---
+import Image from '~/components/common/Image.astro';
+import appStoreImg from '~/assets/images/fondo.jpg';
+
+---
+
+<section class=" md:px-40 px-20 m-6 grid md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4 place-content-around place-items-center  gap-10  min-h-96 ">
+    
+        <div class="h-80 w-52 card bg-white shadow-lg" style="background-image: url(src/assets/images/fondo.jpg); background-size: cover;">
+            <Image 
+            class="object-cover w-full h-full rounded shadow-lg lg:rounded-none lg:shadow-none md:h-96 lg:h-full "
+            src={appStoreImg} alt="App Store Image"  />
+            
+            <slot name="header"></slot>
+            <div class="card-body">
+                <slot>
+                    <div class="description" style="background: rgba(0, 0, 0, 0.5); position: relative; top: 70%; color: white;">
+                        Aquí va el texto descriptivo
+                    </div>
+                </slot>
+            </div>
+            <slot name="footer"></slot>
+        
+        </div>
+        <div class="h-80 w-52 card bg-white shadow-lg" style="background-image: url(src/assets/images/fondo.jpg); background-size: cover;">
+        
+            <slot name="header"></slot>
+            <div class="card-body">
+                <slot>
+                    <div class="description" style="background: rgba(0, 0, 0, 0.5); position: relative; top: 70%; color: white;">
+                        Aquí va el texto descriptivo
+                    </div>
+                </slot>
+            </div>
+            <slot name="footer"></slot>
+        
+        </div>
+        <div class="h-80 w-52 card bg-white shadow-lg" style="background-image: url(src/assets/images/fondo.jpg); background-size: cover;">
+        
+            <slot name="header"></slot>
+            <div class="card-body">
+                <slot>
+                    <div class="description" style="background: rgba(0, 0, 0, 0.5); position: relative; top: 70%; color: white;">
+                        Aquí va el texto descriptivo
+                    </div>
+                </slot>
+            </div>
+            <slot name="footer"></slot>
+        
+        </div>
+        <div class="h-80 w-52 card bg-white shadow-lg" style="background-image: url(src/assets/images/fondo.jpg); background-size: cover;">
+        
+            <slot name="header"></slot>
+            <div class="card-body">
+                <slot>
+                    <div class="description" style="background: rgba(0, 0, 0, 0.5); position: relative; top: 70%; color: white;">
+                        Aquí va el texto descriptivo
+                    </div>
+                </slot>
+            </div>
+            <slot name="footer"></slot>
+        
+        </div>
+    
+   
+    
+    
+    
+  
+
+</section>
+
+
+
+<style>
+
+.card {
+    color: white;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+}
+</style>
