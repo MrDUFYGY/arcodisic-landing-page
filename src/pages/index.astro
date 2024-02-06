@@ -3,12 +3,11 @@ import Layout from '../layouts/Layout.astro';
 
 import Header from '../components/ui/indexui/Header.astro';
 import Galeria from '../components/ui/indexui/Galeria.astro';
-import Accesos from '../components/ui/indexui/Accesos.astro';
+import Accesos from '../components/ui/indexui/AccesosCard.astro';
 import Contacto from '../components/ui/indexui/ContactoSeccion.astro';
-import Map from '../components/ui/indexui/Map.astro';
 import Procesos from '../components/ui/indexui/ProcesosDos.astro';
 import Separador from '../components/ui/indexui/separadores/Separador.astro';
-import AccesosCard from '../components/ui/indexui/AccesosCard.astro';
+
 
 const metadata = {
   title: 'Home',
@@ -23,16 +22,20 @@ const metadata = {
 		<Header />
 		<Separador separador="Accesos" />
 		<Accesos />
-		<AccesosCard />
+
 		<Separador separador="Galeria" />
 		<Galeria />
 		<Separador separador="Procesos" />
 		<Procesos />
+		
+
+		
 		<Separador separador="Contacto" />
 		<Contacto />
-	</main>
-		<Separador separador="Mapa" />
-		<Map />
+
 		
-		  
+	</main>
+	
+
+	  
 </Layout>
