@@ -21,8 +21,7 @@ const {
 <nav class="flex justify-between items-center w-full h-min-30 md:h-30  py-2 bg-gray-200 shadow-md sticky top-0 z-50">
   <!-- Logo -->
   <div class=" flex justify-center items-center lg:ml-60 md:ml-28 sm:ml-10">
-    
-    <svg class="w-32 h-12" width="150" height="60" viewBox="0 0 150 60" fill="none" xmlns="">
+    <a href="/"><svg class="w-32 h-12" width="150" height="60" viewBox="0 0 150 60" fill="none" xmlns="">
       <path d="M118.932 58.4016H50.9288V59.7921H118.932V58.4016Z" fill="#0100D3"/>
       <path d="M76.2306 48.1256C74.8974 48.1277 73.6195 48.6578 72.6776 49.5996C71.7358 50.5414 71.207 51.8178 71.2074 53.1485C71.2074 54.4802 71.7374 55.7574 72.6809 56.699C73.6244 57.6407 74.9041 58.1698 76.2384 58.1698C77.5727 58.1698 78.8523 57.6407 79.7958 56.699C80.7393 55.7574 81.2693 54.4802 81.2693 53.1485C81.2695 52.4883 81.1393 51.8345 80.8861 51.2246C80.6328 50.6147 80.2616 50.0607 79.7936 49.5941C79.3256 49.1276 78.77 48.7578 78.1586 48.5058C77.5472 48.2538 76.8921 48.1246 76.2306 48.1256ZM76.2306 55.1662C75.6435 55.1662 75.0805 54.9335 74.6654 54.5191C74.2502 54.1048 74.017 53.5428 74.017 52.9569C74.017 52.3709 74.2502 51.809 74.6654 51.3946C75.0805 50.9803 75.6435 50.7475 76.2306 50.7475C76.8177 50.7475 77.3807 50.9803 77.7959 51.3946C78.211 51.809 78.4442 52.3709 78.4442 52.9569C78.4442 53.5428 78.211 54.1048 77.7959 54.5191C77.3807 54.9335 76.8177 55.1662 76.2306 55.1662Z" fill="#0100D3"/>
       <path d="M87.2833 48.1364C86.8607 48.1364 86.209 48.1256 86.209 48.1256V51.0472H87.2245C88.4474 51.0472 89.1006 52.087 89.1006 53.306C89.1006 54.5251 88.5046 55.2358 87.2817 55.2358H86.209L86.2229 58.1713H87.3065C87.9657 58.1721 88.6186 58.043 89.2277 57.7914C89.8367 57.5398 90.3901 57.1707 90.8559 56.7052C91.3217 56.2397 91.6909 55.687 91.9422 55.0787C92.1935 54.4705 92.3221 53.8187 92.3204 53.1608C92.3208 52.5006 92.1908 51.8468 91.9378 51.2369C91.6847 50.6269 91.3137 50.0727 90.8458 49.606C90.3779 49.1394 89.8225 48.7693 89.2112 48.5172C88.5999 48.265 87.9447 48.1356 87.2833 48.1364Z" fill="#0100D3"/>
@@ -38,15 +37,16 @@ const {
       <path d="M143.808 57.4745L122.91 53.921C117.957 29.8188 95.0094 19.6109 77.3623 17.848C77.3623 17.848 88.3902 8.34308 102.786 8.34308C129.721 10.1971 143.808 57.4745 143.808 57.4745Z" fill="#A6A6A6"/>
       <path d="M84.3653 12.8236C100.619 17.4586 123.529 28.5394 127.709 54.8479L130.186 55.1569C128.019 41.4063 119.659 20.8576 86.842 11.5443L84.3653 12.8236Z" fill="#0100D3"/>
       <path d="M93.6533 8.65205C109.907 13.2871 128.019 26.1107 135.759 56.2385L138.235 56.5475C138.235 56.5475 130.186 17.3041 97.3685 7.87955L93.6533 8.65205Z" fill="#0100D3"/>
-    </svg>
+    </svg></a>
+    
       
   </div>
   <!-- Desktop menu -->
   <div class="flex justify-center items-center hidden md:flex  lg:-ml-60 md:-ml-28 sm:-ml-10">
     <a href="/" class="px-2 text-lg font-bold hover:text-gray-700">Inicio</a>
-    <a href="/about" class="px-2 text-lg font-bold hover:text-gray-700">Productos</a>
-    <a href="/productos" class="px-2 text-lg font-bold hover:text-gray-700">Conocenos</a>
-    <a href="/contacto" class="px-2 text-lg font-bold hover:text-gray-700">Nosotros</a>
+    <a href="/product" class="px-2 text-lg font-bold hover:text-gray-700">Productos</a>
+    <a href="/about" class="px-2 text-lg font-bold hover:text-gray-700">Conocenos</a>
+    <a href="/contact" class="px-2 text-lg font-bold hover:text-gray-700">Nosotros</a>
   </div>
   <!-- otros -->
   
@@ -69,18 +69,20 @@ const {
   </div>
   <!-- Mobile menu button -->
   <button id="menu-toggle" class="absolute md:hidden right-4">
+    
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   </button>
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="gap-8 hidden md:hidden absolute top-0 right-0 bottom-0 h-full grid justify-center items-center rounded-lg ">
-    <a href="/" class="text-lg font-bold py-2 block hover:text-gray-700">Inicio</a>
-    <a href="/about" class="px-2 text-lg font-bold hover:text-gray-700">Cotiza</a>
-    <a href="/productos" class="px-2 text-lg font-bold hover:text-gray-700">Conocenos</a>
-    <a href="/contacto" class="px-2 text-lg font-bold hover:text-gray-700">Contacto</a>
-    <a href="#" class="text-lg font-bold py-2 block hover:text-gray-700">Idioma</a>
-    <a href="#" class="text-lg font-bold py-2 block hover:text-gray-700">Modo oscuro</a>
+  <div id="mobile-menu" class="text-white gap-8 hidden md:hidden absolute top-0 right-0 bottom-0 h-full grid justify-center items-center rounded-lg ">
+    <a href="/" class="text-lg font-bold py-2 block hover:text-gray-100">Inicio</a>
+    <a href="/productos" class="px-2 text-lg font-bold hover:text-gray-100">Productos</a>
+    <a href="/about" class="px-2 text-lg font-bold hover:text-gray-100">Conocenos</a>
+    <a href="/contact" class="px-2 text-lg font-bold hover:text-gray-700">Contacto</a>
+    <p class="px-2 text-lg font-bold">Modo Oscuro</p>{showToggleTheme && <ToggleTheme iconClass="w-6 h-6 " />}
+
+    
     <div class="py-5 absolute top-0 right-5">
       <button id="close-menu" class="text-lg font-bold hover:text-gray-700">X</button>
     </div>
