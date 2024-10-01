@@ -17,11 +17,20 @@ import BasicScripts from '~/components/common/BasicScripts.astro';
 
 import type { MetaData as MetaDataType } from '~/types';
 
+import Nav from '../components/ui/indexui/NavigationBar.astro';	
+import Contacto from '../components/ui/indexui/ContactoBarra.astro';
+import Footer from '../components/ui/indexui/FooterPrincipal.astro';
+
+
+
+
 export interface Props {
   metadata?: MetaDataType;
+
 }
 
 const { metadata = {} } = Astro.props;
+
 const { language, textDirection } = I18N;
 ---
 
@@ -40,15 +49,17 @@ const { language, textDirection } = I18N;
     <!-- <ViewTransitions fallback="swap" /> -->
   </head>
 
-  <body class="antialiased text-default bg-page tracking-tight">
-    <slot />
+  <body class="bg-[#D9D9D9] dark:bg-[#222242]">
+    
+    <Contacto />
+		<Nav />
 
+    <slot />
+    <Footer />
     <BasicScripts />
 
     <style is:global>
-      img {
-        content-visibility: auto;
-      }
+    
     </style>
   </body>
 </html>
