@@ -67,26 +67,31 @@ const {
       </div>
     </div>
   </div>
-  <!-- Mobile menu button -->
+  <!-- Mobile menu button (Botón de menú móvil con diseño flotante) -->
   <button id="menu-toggle" class="absolute md:hidden right-4">
-    
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
   </button>
-  <!-- Mobile menu -->
-  <div id="mobile-menu" class="text-white gap-8 hidden md:hidden absolute top-0 right-0 bottom-0 h-full grid justify-center items-center rounded-lg ">
-    <a href="/" class="text-lg font-bold py-2 block hover:text-gray-100">Inicio</a>
-    <a href="/productos" class="px-2 text-lg font-bold hover:text-gray-100">Productos</a>
-    <a href="/about" class="px-2 text-lg font-bold hover:text-gray-100">Conocenos</a>
-    <a href="/contact" class="px-2 text-lg font-bold hover:text-gray-700">Contacto</a>
-    <p class="px-2 text-lg font-bold">Modo Oscuro</p>{showToggleTheme && <ToggleTheme iconClass="w-6 h-6 " />}
 
+  <!-- Mobile menu (Menú móvil flotante con animación hacia la izquierda) -->
+  <div id="mobile-menu" class="text-white hidden absolute top-0 right-0 h-full w-64 bg-blue-800 transition-transform transform translate-x-full">
+    <!-- Elementos del menú móvil -->
+    <a href="/" class="text-lg font-bold py-2 block hover:text-gray-100 transition-colors duration-300">Inicio</a>
+    <a href="/productos" class="px-2 text-lg font-bold hover:text-gray-100 transition-colors duration-300">Productos</a>
+    <a href="/about" class="px-2 text-lg font-bold hover:text-gray-100 transition-colors duration-300">Conócenos</a>
+    <a href="/contact" class="px-2 text-lg font-bold hover:text-gray-100 transition-colors duration-300">Contacto</a>
+    <p class="px-2 text-lg font-bold">Modo Oscuro</p>
+    {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 " />}
     
+    <!-- Botón para cerrar el menú móvil -->
     <div class="py-5 absolute top-0 right-5">
       <button id="close-menu" class="text-lg font-bold hover:text-gray-700">X</button>
     </div>
   </div>
+
+
+  
 </nav>
 
 
