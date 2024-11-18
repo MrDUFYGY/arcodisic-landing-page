@@ -64,21 +64,38 @@ const metadata = {
             </div>
 
             <div class="p-4 py-6 rounded-lg md:p-8">
-              <form name="contacto-principal" method="POST" data-netlify="true">
-                <div class="relative mb-4">	
-                  <label for="name" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Nombre</label>
-                  <input type="text" id="name" name="name" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                </div>
-                <div class="relative mb-4">
-                  <label for="email" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Email</label>
-                  <input type="email" id="email" name="email" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                </div>
-                <div class="relative mb-4">
-                  <label for="message" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Mensaje</label>
-                  <textarea id="message" name="message" class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
-                </div>
-                <button type="submit" class="text-white bg-[#0100D3] border-0 py-2 px-6 focus:outline-none hover:bg-blue-900 rounded text-lg">Button</button>
-                </form>
+                <form name="form-landing" method="POST" data-netlify="true">
+                    <div class="relative mb-4">
+                      <label for="name" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Nombre</label>
+                      <input type="text" id="name" name="name" required class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                      <label for="email" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Email</label>
+                      <input type="email" id="email" name="email" required class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                      <label for="phone" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Teléfono</label>
+                      <input type="tel" id="phone" name="phone" placeholder="Tu número de teléfono" required class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                      <label for="projectType" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Tipo de Proyecto o Asunto</label>
+                      <select id="projectType" name="projectType" required class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        <option value="">Selecciona una opción</option>
+                        <option value="gruas">Grúas</option>
+                        <option value="arcotechos">Arcotechos</option>
+                        <option value="cotizacion">Cotización</option>
+                      </select>
+                    </div>
+                    <div class="relative mb-4">
+                      <label for="location" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Ubicación</label>
+                      <input type="text" id="location" name="location" placeholder="Tu ubicación" required class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                      <label for="message" class="leading-7 text-sm text-gray-900 dark:text-gray-400">Mensaje</label>
+                      <textarea id="message" name="message" required class="w-full bg-gray-800 rounded border border-gray-700 focus:border-[#0100D3] focus:ring-2 focus:ring-[#0100D3] h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                    </div>
+                    <button type="submit" class="text-white bg-[#0100D3] border-0 py-2 px-6 focus:outline-none hover:bg-blue-900 rounded text-lg">Enviar</button>
+                  </form>
                 <p class="text-xs text-gray-900 dark:text-gray-400 text-opacity-90 mt-3">Arcodisic se encargara de ponerse en contacto una vez recibamos tu peticion.</p>
             </div>
         </div>
