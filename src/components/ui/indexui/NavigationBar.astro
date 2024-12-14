@@ -59,7 +59,7 @@ const {
     >
     
       <div class="items-center flex justify-between w-full md:w-auto">
-        <div class="flex">
+        <div class="flex text-black">
           {showToggleTheme && <ToggleTheme iconClass="w-6 h-6 md:w-5 md:h-5 md:inline-block" />}
         
         </div>
@@ -76,11 +76,14 @@ const {
   </button>
   <!-- Mobile menu -->
   <div id="mobile-menu" class="text-white gap-8 hidden md:hidden absolute top-0 right-0 bottom-0 h-full grid justify-center items-center rounded-lg ">
-    <a href="/" class="text-lg font-bold py-2 block hover:text-gray-100">Inicio</a>
-    <a href="/product" class="px-2 text-lg font-bold hover:text-gray-100">Productos</a>
-    <a href="/about" class="px-2 text-lg font-bold hover:text-gray-100">Conocenos</a>
-    <a href="/contact" class="px-2 text-lg font-bold hover:text-gray-700">Contacto</a>
-    <p class="px-2 text-lg font-bold">Modo Oscuro</p>{showToggleTheme && <ToggleTheme iconClass="w-6 h-6 " />}
+    <a href="/" class="text-lg border-b-4 font-bold py-2 block hover:text-gray-400">Inicio</a>
+    <a href="/product" class="px-2 border-b-4 text-lg font-bold hover:text-gray-400">Productos</a>
+    <a href="/about" class="px-2 border-b-4 text-lg font-bold hover:text-gray-400">Conocenos</a>
+    <a href="/contact" class="px-2 border-b-4 text-lg font-bold hover:text-gray-400">Contacto</a>
+   
+    <div class="w-1 text-center">
+       {showToggleTheme && <ToggleTheme iconClass="w-6 h-6" />}
+    </div>
 
     
     <div class="py-5 absolute top-0 right-5">
