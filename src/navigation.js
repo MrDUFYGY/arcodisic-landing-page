@@ -2,44 +2,40 @@ import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 
 export const headerData = {
   links: [
-    {
-      text: 'Homes',
-      links: [
-        {
-          text: 'SaaS',
-          href: getPermalink('/homes/saas'),
-        },
-        {
-          text: 'Startup',
-          href: getPermalink('/homes/startup'),
-        },
-        {
-          text: 'Mobile App',
-          href: getPermalink('/homes/mobile-app'),
-        },
-        {
-          text: 'Personal',
-          href: getPermalink('/homes/personal'),
-        },
-      ],
-    },
+    // {
+    //   text: 'Homes',
+    //   links: [
+    //     {
+    //       text: 'SaaS',
+    //       href: getPermalink('/homes/saas'),
+    //     },
+    //     {
+    //       text: 'Startup',
+    //       href: getPermalink('/homes/startup'),
+    //     },
+    //     {
+    //       text: 'Mobile App',
+    //       href: getPermalink('/homes/mobile-app'),
+    //     },
+    //     {
+    //       text: 'Personal',
+    //       href: getPermalink('/homes/personal'),
+    //     },
+    //   ],
+    // },
     {
       text: 'Pages',
       links: [
         {
-          text: 'Features (Anchor Link)',
-          href: getPermalink('/#features'),
+          text: 'Novedades (Anchor Link)',
+          href: getPermalink('/index'),
         },
         {
-          text: 'Services',
-          href: getPermalink('/services'),
+          text: 'Productos',
+          href: getPermalink('/product'),
         },
         {
-          text: 'Pricing',
-          href: getPermalink('/pricing'),
-        },
-        {
-          text: 'About us',
+          text: 'acerca nosotros',
           href: getPermalink('/about'),
         },
         {
@@ -47,44 +43,44 @@ export const headerData = {
           href: getPermalink('/contact'),
         },
         {
-          text: 'Terms',
+          text: 'Terminos',
           href: getPermalink('/terms'),
         },
         {
-          text: 'Privacy policy',
+          text: 'Politica de privacidad',
           href: getPermalink('/privacy'),
         },
       ],
     },
-    {
-      text: 'Landing',
-      links: [
-        {
-          text: 'Lead Generation',
-          href: getPermalink('/landing/lead-generation'),
-        },
-        {
-          text: 'Long-form Sales',
-          href: getPermalink('/landing/sales'),
-        },
-        {
-          text: 'Click-Through',
-          href: getPermalink('/landing/click-through'),
-        },
-        {
-          text: 'Product Details (or Services)',
-          href: getPermalink('/landing/product'),
-        },
-        {
-          text: 'Coming Soon or Pre-Launch',
-          href: getPermalink('/landing/pre-launch'),
-        },
-        {
-          text: 'Subscription',
-          href: getPermalink('/landing/subscription'),
-        },
-      ],
-    },
+    // {
+    //   text: 'Landing',
+    //   links: [
+    //     {
+    //       text: 'Lead Generation',
+    //       href: getPermalink('/lead-generation'),
+    //     },
+    //     {
+    //       text: 'Long-form Sales',
+    //       href: getPermalink('/sales'),
+    //     },
+    //     {
+    //       text: 'Click-Through',
+    //       href: getPermalink('/click-through'),
+    //     },
+    //     {
+    //       text: 'Product Details (or Services)',
+    //       href: getPermalink('/product'),
+    //     },
+    //     {
+    //       text: 'Coming Soon or Pre-Launch',
+    //       href: getPermalink('/pre-launch'),
+    //     },
+    //     {
+    //       text: 'Subscription',
+    //       href: getPermalink('/subscription'),
+    //     },
+    //   ],
+    // },
     {
       text: 'Blog',
       links: [
@@ -132,16 +128,16 @@ export const footerData = {
         { text: 'Resources', href: '#' },
       ],
     },
-    {
-      title: 'Platform',
-      links: [
-        { text: 'Developer API', href: '#' },
-        { text: 'Partners', href: '#' },
-        { text: 'Atom', href: '#' },
-        { text: 'Electron', href: '#' },
-        { text: 'AstroWind Desktop', href: '#' },
-      ],
-    },
+    // {
+    //   title: 'Platform',
+    //   links: [
+    //     { text: 'Developer API', href: '#' },
+    //     { text: 'Partners', href: '#' },
+    //     { text: 'Atom', href: '#' },
+    //     { text: 'Electron', href: '#' },
+    //     { text: 'AstroWind Desktop', href: '#' },
+    //   ],
+    // },
     {
       title: 'Support',
       links: [
