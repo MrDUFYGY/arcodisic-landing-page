@@ -78,7 +78,7 @@ const config = yaml.load(fs.readFileSync('src/config.yaml', 'utf8')) as {
   analytics?: unknown;
 };
 
-const DEFAULT_SITE_NAME = 'Arcodisic Landing Page';
+const DEFAULT_SITE_NAME = 'Arcodisic Arcotechos y Gruas';
 
 const getSite = () => {
   const _default = {
@@ -153,7 +153,7 @@ const getAppBlog = () => {
       },
     },
     category: {
-      isEnabled: true,
+      isEnabled: false,
       pathname: 'category',
       robots: {
         index: true,
