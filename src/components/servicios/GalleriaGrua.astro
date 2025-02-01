@@ -1,0 +1,154 @@
+---
+
+import gruaImgUno from '~/assets/images/gruas14.jpeg';
+import gruaImgDos from '~/assets/images/gruas16.jpeg';
+import gruaImgTres from '~/assets/images/3.jpeg';
+import gruaImgCuatro from '~/assets/images/gruas9.jpeg';
+
+
+---
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+    
+    <!-- Main Image Container -->
+    <div class="relative w-[100%] h-[70vh] mb-4 rounded-lg overflow-hidden" id="mainImageContainer">
+      <img 
+        src={gruaImgUno.src}
+        alt="Yellow crane at construction site during sunset"
+        class="w-full h-full object-cover opacity-100 transition-opacity duration-1000"
+        id="mainImage"
+      />
+    </div>
+  
+    <!-- Thumbnails -->
+    <div class="grid grid-cols-4 gap-4">
+      <button 
+        class="relative h-24 rounded-lg overflow-hidden thumbnail active" 
+        data-image={gruaImgUno.src}
+        data-alt="Yellow crane at construction site during sunset">
+        <img 
+        src={gruaImgUno.src}
+          alt="Thumbnail 1" 
+          class="w-full h-full object-cover"
+        />
+      </button>
+      <button 
+        class="relative h-24 rounded-lg overflow-hidden thumbnail" 
+        data-image={gruaImgDos.src}
+        data-alt="Mobile crane against blue sky">
+        <img 
+        src={gruaImgDos.src}
+          alt="Thumbnail 2" 
+          class="w-full h-full object-cover"
+        />
+      </button>
+      <button 
+        class="relative h-24 rounded-lg overflow-hidden thumbnail" 
+        data-image={gruaImgTres.src}
+        data-alt="White crane installation">
+        <img 
+        src={gruaImgTres.src}
+          alt="Thumbnail 3" 
+          class="w-full h-full object-cover"
+        />
+      </button>
+      <button 
+        class="relative h-24 rounded-lg overflow-hidden thumbnail" 
+        data-image={gruaImgCuatro.src}
+        data-alt="Construction crane near power lines">
+        <img 
+        src={gruaImgCuatro.src}
+          alt="Thumbnail 4" 
+          class="w-full h-full object-cover"
+        />
+      </button>
+    </div>
+  
+    <!-- Progress Indicators -->
+    <div class="flex justify-center gap-2 mt-4" id="progressIndicators">
+      <div class="h-2 w-8 bg-blue-600 rounded-full"></div>
+      <div class="h-2 w-2 bg-gray-300 rounded-full"></div>
+      <div class="h-2 w-2 bg-gray-300 rounded-full"></div>
+      <div class="h-2 w-2 bg-gray-300 rounded-full"></div>
+    </div>
+  </div>
+  
+  <style>
+    .thumbnail.active {
+      @apply ring-2 ring-blue-600 ring-offset-2;
+    }
+    
+    .thumbnail:hover:not(.active) {
+      @apply opacity-75;
+    }
+  </style>
+  
+  <script type="text/javascript" is:inline>
+    let currentIndex = 0;
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.getElementById('mainImage');
+    const progressIndicators = document.getElementById('progressIndicators').children;
+    let intervalId;
+    let isHovered = false;
+  
+    // Función para actualizar la imagen principal
+    function updateMainImage(index) {
+      const newSrc = thumbnails[index].getAttribute('data-image');
+      const newAlt = thumbnails[index].getAttribute('data-alt');
+      
+      // Actualizar imagen principal
+      mainImage.style.opacity = '0';
+      setTimeout(() => {
+        mainImage.src = newSrc;
+        mainImage.alt = newAlt;
+        mainImage.style.opacity = '1';
+      }, 500);
+  
+      // Actualizar thumbnails activos
+      thumbnails.forEach(thumb => thumb.classList.remove('active'));
+      thumbnails[index].classList.add('active');
+  
+      // Actualizar indicadores de progreso
+      Array.from(progressIndicators).forEach((indicator, i) => {
+        indicator.classList.remove('w-8', 'bg-blue-600');
+        indicator.classList.add('w-2', 'bg-gray-300');
+        if (i === index) {
+          indicator.classList.remove('w-2', 'bg-gray-300');
+          indicator.classList.add('w-8', 'bg-blue-600');
+        }
+      });
+  
+      currentIndex = index;
+    }
+  
+    // Iniciar rotación automática
+    function startAutoRotation() {
+      intervalId = setInterval(() => {
+        if (!isHovered) {
+          const nextIndex = (currentIndex + 1) % thumbnails.length;
+          updateMainImage(nextIndex);
+        }
+      }, 3000);
+    }
+  
+    // Event Listeners
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.addEventListener('click', () => {
+        updateMainImage(index);
+        clearInterval(intervalId);
+        startAutoRotation();
+      });
+    });
+  
+    // Pausar en hover
+    mainImage.parentElement.addEventListener('mouseenter', () => {
+      isHovered = true;
+    });
+  
+    mainImage.parentElement.addEventListener('mouseleave', () => {
+      isHovered = false;
+    });
+  
+    // Iniciar la rotación automática
+    startAutoRotation();
+  </script>

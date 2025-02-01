@@ -31,8 +31,8 @@ export const headerData = {
           href: getPermalink('/index'),
         },
         {
-          text: 'Productos',
-          href: getPermalink('/product'),
+          text: 'Servicios',
+          href: getPermalink('/services'),
         },
         {
           text: 'acerca nosotros',
@@ -126,9 +126,9 @@ export const headerData = {
 export const footerData = {
   links: [
     {
-      title: 'Productos',
+      title: 'Servicios',
       links: [
-        { text: 'Arcotechos y Gruas en Texcoco', href: '/product' },
+        { text: 'Arcotechos y Gruas en Texcoco', href: '/services' },
         // { text: 'Security', href: '#' },
         // { text: 'Team', href: '#' },
         // { text: 'Enterprise', href: '#' },

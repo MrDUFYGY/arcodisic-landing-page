@@ -1,0 +1,22 @@
+---
+import Separador from '../components/ui/indexui/separadores/Separador.astro';
+import Layout from '~/layouts/layout.astro';
+import Content from '../components/servicios/GruaAcceso.astro'
+import IniciaProceso from '~/components/servicios/IniciaProceso.astro';
+import GalleriaGrua from '../components/servicios/GalleriaGrua.astro'
+const metadata = {
+  title: '',
+};
+---
+
+<Layout metadata={metadata}>
+  
+  <Separador separador="Gruas en Texcoco, Ecatepec y alrededores"/>
+  <GalleriaGrua />
+  <Content />
+
+
+  
+  <IniciaProceso />
+  
+</Layout>
