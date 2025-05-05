@@ -74,6 +74,22 @@ const { language, textDirection } = I18N;
     <Footer />
     <BasicScripts />
 
+    <script>
+      if ('startViewTransition' in document) {
+        document.addEventListener('click', (e) => {
+          const target = e.target;
+          if (!target) return;
+          const a = (target instanceof Element) ? target.closest('a[view-transition]') : null;
+          if (a && a instanceof HTMLAnchorElement && a.href && a.origin === location.origin) {
+            e.preventDefault();
+            document.startViewTransition(() => {
+              window.location.assign(a.href);
+            });
+          }
+        });
+      }
+    </script>
+
     <style is:global>
     
     </style>

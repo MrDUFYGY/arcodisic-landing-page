@@ -1,0 +1,113 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import IniciaProceso from '~/components/servicios/IniciaProceso.astro';
+
+const metadata = {
+  title: 'Arcotechos en Texcoco, Ecatepec y alrededores',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="lg:py-12 lg:flex lg:justify-center">
+    <div class="max-w-4xl px-6 py-8 bg-[#0100D3] rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold text-gray-100">🏗️ Arcotechos en Texcoco, Ecatepec y Alrededores</h2>
+      <p class="mt-4 text-gray-300">
+        En <strong>Arcodisic</strong>, diseñamos e instalamos arcotechos de alta calidad para naves industriales, almacenes, bodegas y más. Soluciones eficientes, resistentes y con máxima optimización de espacio.
+      </p>
+      <ul class="mt-6 space-y-4 text-gray-200">
+        <li>✅ <strong>Amplia cobertura</strong> sin pilares intermedios.</li>
+        <li>✅ <strong>Instalación rápida</strong> y eficiente.</li>
+        <li>✅ <strong>Diseño estético</strong> y adaptable a cualquier proyecto.</li>
+        <li>✅ <strong>Durabilidad garantizada</strong> y bajo mantenimiento.</li>
+        <li>✅ <strong>Resistencia superior</strong> a condiciones climáticas extremas.</li>
+      </ul>
+      <h3 class="mt-6 text-2xl font-semibold text-gray-100">🔍 ¿Por qué elegir Arcotechos sobre techos tradicionales?</h3>
+      <div class="overflow-x-auto mt-4">
+        <table class="min-w-full text-gray-100 bg-[#0100D3] border border-gray-300 rounded-lg">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 border">Característica</th>
+              <th class="px-4 py-2 border">Arcotechos</th>
+              <th class="px-4 py-2 border">Techos Tradicionales</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-4 py-2 border">Costo inicial</td>
+              <td class="px-4 py-2 border">★★★☆☆</td>
+              <td class="px-4 py-2 border">★★☆☆☆</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Durabilidad</td>
+              <td class="px-4 py-2 border">★★★★★</td>
+              <td class="px-4 py-2 border">★★★☆☆</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Mantenimiento</td>
+              <td class="px-4 py-2 border">★★★★★</td>
+              <td class="px-4 py-2 border">★★★☆☆</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Tiempo de instalación</td>
+              <td class="px-4 py-2 border">★★★★★</td>
+              <td class="px-4 py-2 border">★★☆☆☆</td>
+            </tr>
+            <tr>
+              <td class="px-4 py-2 border">Versatilidad</td>
+              <td class="px-4 py-2 border">★★★★★</td>
+              <td class="px-4 py-2 border">★★★☆☆</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 text-lg font-semibold text-gray-100">🚀 Cotiza tu arcotecho hoy mismo y lleva tu proyecto al siguiente nivel.</p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold text-[#0100D3] mb-6">Catálogo de Arcotechos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <a href="/arcotecho-industrial" view-transition class="block rounded-lg overflow-hidden shadow-lg bg-white transition-all">
+        <img src="/src/assets/images/2.jpeg" alt="Arcotecho industrial" class="w-full h-48 object-cover" view-transition-name="arcotecho-industrial" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg text-[#0100D3]">Arcotecho Industrial</h3>
+          <p class="text-gray-700 text-sm mt-2">Ideal para naves industriales, almacenes y grandes superficies. Instalación rápida y máxima resistencia.</p>
+        </div>
+      </a>
+      <a href="/arcotecho-almacen" view-transition class="block rounded-lg overflow-hidden shadow-lg bg-white transition-all">
+        <img src="/src/assets/images/4.jpeg" alt="Arcotecho para almacén" class="w-full h-48 object-cover" view-transition-name="arcotecho-almacen" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg text-[#0100D3]">Arcotecho para Almacén</h3>
+          <p class="text-gray-700 text-sm mt-2">Solución eficiente para resguardar mercancía y optimizar el espacio de almacenamiento.</p>
+        </div>
+      </a>
+      <a href="/arcotecho-deportivo" view-transition class="block rounded-lg overflow-hidden shadow-lg bg-white transition-all">
+        <img src="/src/assets/images/5.jpeg" alt="Arcotecho deportivo" class="w-full h-48 object-cover" view-transition-name="arcotecho-deportivo" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg text-[#0100D3]">Arcotecho Deportivo</h3>
+          <p class="text-gray-700 text-sm mt-2">Perfecto para canchas, gimnasios y espacios recreativos. Protección y diseño moderno.</p>
+        </div>
+      </a>
+      <a href="/arcotecho-personalizado" view-transition class="block rounded-lg overflow-hidden shadow-lg bg-white transition-all">
+        <img src="/src/assets/images/6.jpeg" alt="Arcotecho personalizado" class="w-full h-48 object-cover" view-transition-name="arcotecho-personalizado" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg text-[#0100D3]">Arcotecho Personalizado</h3>
+          <p class="text-gray-700 text-sm mt-2">Diseño a la medida para proyectos especiales. Adaptabilidad y estética garantizadas.</p>
+        </div>
+      </a>
+      <a href="/arcotecho-proyecto-especial" view-transition class="block rounded-lg overflow-hidden shadow-lg bg-white transition-all">
+        <img src="/src/assets/images/44.jpeg" alt="Arcotecho adicional" class="w-full h-48 object-cover" view-transition-name="arcotecho-proyecto-especial" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg text-[#0100D3]">Otro Proyecto de Arcotecho</h3>
+          <p class="text-gray-700 text-sm mt-2">Ejemplo de otro tipo de arcotecho realizado por nuestro equipo, adaptado a necesidades específicas.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <IniciaProceso />
+  <section class="max-w-4xl mx-auto px-6 py-6 mt-8 bg-gray-100 rounded-lg">
+    <h3 class="text-xl font-bold text-[#0100D3] mb-2">¿Necesitas maniobras especializadas?</h3>
+    <p class="text-gray-700">Además de la instalación de arcotechos, en <strong>Arcodisic</strong> contamos con grúas para maniobras y montajes especializados. Si tu proyecto requiere movimientos de gran precisión o estructuras pesadas, tenemos la solución. <br>La prioridad de esta página son los arcotechos, pero si deseas conocer más sobre nuestros servicios de grúas y maniobras, visita nuestra sección dedicada a <a href="/maniobras" class="text-[#0100D3] underline font-semibold">maniobras con grúa</a>.</p>
+  </section>
+</Layout> 
