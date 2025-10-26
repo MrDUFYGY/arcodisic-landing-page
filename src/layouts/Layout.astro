@@ -90,6 +90,36 @@ const { language, textDirection } = I18N;
       }
     </script>
 
+    <!-- Netlify Identity: handle invite/recovery/login tokens anywhere on the site -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+      (function () {
+        const identity = (window as any).netlifyIdentity;
+        if (!identity) return;
+        const hasIdentityToken = /(?:invite_token|confirmation_token|recovery_token|access_token)=/.test(location.hash);
+
+        // If the URL contains an Identity token hash, open the widget so user can complete flow
+        if (hasIdentityToken) {
+          identity.open('login');
+        }
+
+        // After login / password recovery / confirmation, send user to the CMS
+        const gotoCMS = () => {
+          try { location.hash = ''; } catch (e) { console.debug('Identity: could not clear URL hash', e); }
+          window.location.href = '/admin/';
+        };
+
+        identity.on('login', gotoCMS);
+        identity.on('signup', gotoCMS);
+        identity.on('init', (user: any) => {
+          // If user already logged in and came from a token flow, go to CMS
+          if (user && hasIdentityToken) gotoCMS();
+        });
+        // Some clients emit 'recover' on password recovery complete
+        identity.on && identity.on('recover', gotoCMS);
+      })();
+    </script>
+
     <style is:global>
     
     </style>

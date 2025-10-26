@@ -101,87 +101,13 @@
 <body>
   <div class="callback-container">
     <div class="spinner"></div>
-    <h1>Autenticando...</h1>
-    <p>Por favor espera mientras verificamos tu identidad.</p>
-    
-    <div id="error" class="error">
-      <p id="errorMessage"></p>
-      <button class="retry-button" onclick="window.location.href='/admin/login'">
-        Volver a intentar
-      </button>
-    </div>
+    <h1>Redirigiendo...</h1>
+    <p>Por favor espera mientras abrimos el CMS.</p>
   </div>
 
   <script>
-    import { supabase } from '../../lib/supabase';
-
-    async function handleCallback() {
-      try {
-        // Obtener el hash de la URL que contiene el token
-        const hashParams = new URLSearchParams(window.location.hash.substring(1));
-        const accessToken = hashParams.get('access_token');
-        const refreshToken = hashParams.get('refresh_token');
-
-        if (!accessToken) {
-          throw new Error('No se recibió el token de autenticación');
-        }
-
-        // Verificar la sesión
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-
-        if (sessionError) {
-          throw sessionError;
-        }
-
-        if (!session) {
-          // Si no hay sesión, intentar establecerla con el token
-          const { data: { session: newSession }, error: setSessionError } = 
-            await supabase.auth.setSession({
-              access_token: accessToken,
-              refresh_token: refreshToken || '',
-            });
-
-          if (setSessionError) {
-            throw setSessionError;
-          }
-
-          if (!newSession) {
-            throw new Error('No se pudo establecer la sesión');
-          }
-        }
-
-        // Autenticación exitosa, redirigir al admin
-        console.log('✅ Autenticación exitosa');
-        
-        // Esperar un momento para que se guarde la sesión
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Redirigir al panel de admin
-        window.location.href = '/admin';
-
-      } catch (error) {
-        console.error('❌ Error en callback:', error);
-        
-        // Mostrar error
-        const errorDiv = document.getElementById('error');
-        const errorMessage = document.getElementById('errorMessage');
-        
-        if (errorDiv && errorMessage) {
-          errorMessage.textContent = error instanceof Error 
-            ? `Error: ${error.message}` 
-            : 'Error desconocido durante la autenticación';
-          errorDiv.classList.add('show');
-        }
-
-        // Ocultar spinner
-        document.querySelector('.spinner')?.remove();
-        document.querySelector('h1')!.textContent = 'Error de Autenticación';
-        document.querySelector('p')!.textContent = 'No se pudo completar el proceso de autenticación.';
-      }
-    }
-
-    // Ejecutar el callback cuando cargue la página
-    handleCallback();
+    // Simplificado: redirigir directamente al CMS
+    window.location.replace('/admin/index.html');
   </script>
 </body>
 </html>

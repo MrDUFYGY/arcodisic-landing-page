@@ -61,34 +61,9 @@
     </div>
 
     <script>
-      // Detectar si estamos en desarrollo o producción
-      const isLocalhost = window.location.hostname === 'localhost' || 
-                         window.location.hostname === '127.0.0.1';
-
-      if (isLocalhost) {
-        // En desarrollo: verificar autenticación con Supabase (opcional)
-        import('../lib/supabase').then(({ isAuthenticated }) => {
-          isAuthenticated().then(authenticated => {
-            if (authenticated) {
-              // Usuario autenticado con Supabase, mostrar CMS
-              window.location.href = '/admin/index.html';
-            } else {
-              // No autenticado, redirigir al login de Supabase
-              window.location.href = '/admin/login';
-            }
-          }).catch(() => {
-            // Error o sin Supabase, ir directo al CMS (modo local)
-            window.location.href = '/admin/index.html';
-          });
-        }).catch(() => {
-          // Si no puede cargar Supabase, ir directo al CMS
-          window.location.href = '/admin/index.html';
-        });
-      } else {
-        // En producción: redirigir directamente al CMS
-        // Netlify Identity se encargará de la autenticación
-        window.location.href = '/admin/index.html';
-      }
+      // Redirigir siempre al CMS. En producción, Netlify Identity maneja la autenticación.
+      // En local, usa decap-server (npm run cms:local).
+      window.location.replace('/admin/index.html');
     </script>
   </body>
 </html>
