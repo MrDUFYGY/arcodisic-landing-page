@@ -1,6 +1,6 @@
 ---
-// Página de verificación de autenticación
-// Redirige al CMS si está autenticado, o al login si no lo está
+// Página de administración - Redirige al CMS
+// En producción usa Netlify Identity, en desarrollo usa Supabase (opcional)
 ---
 
 <!doctype html>
@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <title>Verificando acceso...</title>
+    <title>Redirigiendo al CMS...</title>
     <style>
       body {
         margin: 0;
@@ -56,35 +56,39 @@
   <body>
     <div class="loading-container">
       <div class="spinner"></div>
-      <h1>Verificando acceso...</h1>
+      <h1>Redirigiendo al CMS...</h1>
       <p>Por favor espera un momento.</p>
     </div>
 
     <script>
-      import { isAuthenticated } from '../lib/supabase';
+      // Detectar si estamos en desarrollo o producción
+      const isLocalhost = window.location.hostname === 'localhost' || 
+                         window.location.hostname === '127.0.0.1';
 
-      async function checkAuth() {
-        try {
-          const authenticated = await isAuthenticated();
-          
-          if (authenticated) {
-            // Usuario autenticado, crear iframe con el CMS
-            const iframe = document.createElement('iframe');
-            iframe.src = '/admin/index.html';
-            iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;border:none;';
-            document.body.innerHTML = '';
-            document.body.appendChild(iframe);
-          } else {
-            // Usuario no autenticado, redirigir al login
-            window.location.href = '/admin/login';
-          }
-        } catch (error) {
-          console.error('Error checking authentication:', error);
-          window.location.href = '/admin/login';
-        }
+      if (isLocalhost) {
+        // En desarrollo: verificar autenticación con Supabase (opcional)
+        import('../lib/supabase').then(({ isAuthenticated }) => {
+          isAuthenticated().then(authenticated => {
+            if (authenticated) {
+              // Usuario autenticado con Supabase, mostrar CMS
+              window.location.href = '/admin/index.html';
+            } else {
+              // No autenticado, redirigir al login de Supabase
+              window.location.href = '/admin/login';
+            }
+          }).catch(() => {
+            // Error o sin Supabase, ir directo al CMS (modo local)
+            window.location.href = '/admin/index.html';
+          });
+        }).catch(() => {
+          // Si no puede cargar Supabase, ir directo al CMS
+          window.location.href = '/admin/index.html';
+        });
+      } else {
+        // En producción: redirigir directamente al CMS
+        // Netlify Identity se encargará de la autenticación
+        window.location.href = '/admin/index.html';
       }
-
-      checkAuth();
     </script>
   </body>
 </html>
