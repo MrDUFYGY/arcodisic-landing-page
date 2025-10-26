@@ -10,7 +10,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier -w .",
-    "lint:eslint": "eslint . --ext .js,.ts,.astro"
+    "lint:eslint": "eslint . --ext .js,.ts,.astro",
+    "cms:local": "npx decap-server",
+    "cms:help": "echo 'Para probar el CMS localmente: 1) Ejecuta npm run cms:local en una terminal, 2) Ejecuta npm run dev en otra terminal, 3) Accede a http://localhost:4321/admin'"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.1",
@@ -18,8 +20,12 @@
     "@astrolib/analytics": "^0.5.0",
     "@astrolib/seo": "^1.0.0-beta.5",
     "@fontsource-variable/inter": "^5.0.16",
+    "@supabase/supabase-js": "^2.76.1",
     "astro": "^4.1.1",
     "astro-icon": "^1.0.2",
+    "decap-cms-app": "^3.8.4",
+    "decap-server": "^3.3.1",
+    "dotenv": "^17.2.3",
     "limax": "4.1.0",
     "lodash.merge": "^4.6.2",
     "typescript-esbuild": "^0.3.5",

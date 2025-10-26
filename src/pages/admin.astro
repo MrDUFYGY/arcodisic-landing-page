@@ -1,0 +1,90 @@
+---
+// Página de verificación de autenticación
+// Redirige al CMS si está autenticado, o al login si no lo está
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Verificando acceso...</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .loading-container {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 48px;
+        text-align: center;
+        max-width: 400px;
+      }
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 24px;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+      p {
+        color: #666;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <h1>Verificando acceso...</h1>
+      <p>Por favor espera un momento.</p>
+    </div>
+
+    <script>
+      import { isAuthenticated } from '../lib/supabase';
+
+      async function checkAuth() {
+        try {
+          const authenticated = await isAuthenticated();
+          
+          if (authenticated) {
+            // Usuario autenticado, crear iframe con el CMS
+            const iframe = document.createElement('iframe');
+            iframe.src = '/admin/index.html';
+            iframe.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;border:none;';
+            document.body.innerHTML = '';
+            document.body.appendChild(iframe);
+          } else {
+            // Usuario no autenticado, redirigir al login
+            window.location.href = '/admin/login';
+          }
+        } catch (error) {
+          console.error('Error checking authentication:', error);
+          window.location.href = '/admin/login';
+        }
+      }
+
+      checkAuth();
+    </script>
+  </body>
+</html>

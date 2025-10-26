@@ -1,0 +1,273 @@
+---
+// Página de login para el CMS
+// Esta página maneja la autenticación con Google OAuth a través de Supabase
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Login - Arcodisic CMS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 48px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      margin-bottom: 32px;
+    }
+
+    .logo h1 {
+      color: #333;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .logo p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .login-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 14px 24px;
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .login-button:hover {
+      border-color: #667eea;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    .login-button svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c33;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 24px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .footer {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #e0e0e0;
+      color: #999;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <h1>🏗️ Arcodisic CMS</h1>
+      <p>Sistema de Gestión de Contenido</p>
+    </div>
+
+    <div id="error" class="error-message"></div>
+
+    <form id="loginForm" style="width: 100%;">
+      <div style="margin-bottom: 20px;">
+        <label for="email" style="display: block; text-align: left; margin-bottom: 8px; color: #333; font-size: 14px; font-weight: 500;">
+          Email
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="tu@email.com"
+          style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: all 0.3s ease;"
+          onfocus="this.style.borderColor='#667eea'"
+          onblur="this.style.borderColor='#e0e0e0'"
+        />
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <label for="password" style="display: block; text-align: left; margin-bottom: 8px; color: #333; font-size: 14px; font-weight: 500;">
+          Contraseña
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          placeholder="••••••••"
+          style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: all 0.3s ease;"
+          onfocus="this.style.borderColor='#667eea'"
+          onblur="this.style.borderColor='#e0e0e0'"
+        />
+      </div>
+
+      <button type="submit" id="loginButton" class="login-button" style="background: #667eea; color: white; border: none;">
+        Iniciar Sesión
+      </button>
+    </form>
+
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Redirigiendo a Google...</p>
+    </div>
+
+    <div class="footer">
+      <p>Acceso restringido a usuarios autorizados</p>
+    </div>
+  </div>
+
+  <script>
+    // Importar las funciones de login
+    import { signInWithEmail, isAuthenticated } from '../../lib/supabase';
+
+    const loginForm = document.getElementById('loginForm') as HTMLFormElement;
+    const loginButton = document.getElementById('loginButton') as HTMLButtonElement;
+    const errorDiv = document.getElementById('error') as HTMLDivElement;
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      try {
+        // Obtener valores del formulario
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+          throw new Error('Por favor ingresa email y contraseña');
+        }
+
+        // Mostrar loading
+        loginButton.disabled = true;
+        loginButton.textContent = 'Iniciando sesión...';
+        errorDiv?.classList.remove('show');
+
+        // Intentar hacer login
+        const { session, user } = await signInWithEmail(email, password);
+        
+        if (session && user) {
+          console.log('✅ Login exitoso:', user.email);
+          
+          // Esperar un momento para que se guarde la sesión
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          // Redirigir al admin
+          window.location.href = '/admin';
+        } else {
+          throw new Error('No se pudo establecer la sesión');
+        }
+        
+      } catch (error) {
+        console.error('❌ Error during login:', error);
+        
+        // Mostrar error
+        if (errorDiv) {
+          let errorMessage = 'Error al iniciar sesión. Por favor, intenta de nuevo.';
+          
+          if (error instanceof Error) {
+            if (error.message.includes('Invalid login credentials')) {
+              errorMessage = 'Email o contraseña incorrectos';
+            } else if (error.message.includes('Email not confirmed')) {
+              errorMessage = 'Por favor confirma tu email antes de iniciar sesión';
+            } else {
+              errorMessage = error.message;
+            }
+          }
+          
+          errorDiv.textContent = errorMessage;
+          errorDiv.classList.add('show');
+        }
+        
+        // Restaurar botón
+        loginButton.disabled = false;
+        loginButton.textContent = 'Iniciar Sesión';
+      }
+    });
+
+    // Verificar si ya hay una sesión activa
+    isAuthenticated().then(authenticated => {
+      if (authenticated) {
+        // Si ya está autenticado, redirigir al admin
+        window.location.href = '/admin';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+# Configuración de DecapCMS para Arcodisic Blog
+# Documentación: https://decapcms.org/docs/configuration-options/
+
+# Backend configuration
+backend:
+  name: git-gateway
+  branch: main
+
+# Habilitar backend local solo para desarrollo
+# En producción, esto se ignora automáticamente
+local_backend: true
+
+# Media files configuration
+media_folder: 'src/assets/images/blog' # Ruta donde se guardarán las imágenes
+public_folder: '/src/assets/images/blog' # Ruta pública para las imágenes
+
+# Configuración del editor
+slug:
+  encoding: 'ascii'
+  clean_accents: true
+  sanitize_replacement: '-'
+
+# Colecciones
+collections:
+  # Colección de Posts del Blog
+  - name: 'post'
+    label: 'Blog Posts'
+    label_singular: 'Post'
+    folder: 'src/content/post'
+    create: true
+    slug: '{{slug}}'
+    preview_path: '{{slug}}'
+    format: 'frontmatter'
+    extension: 'md'
+    
+    # Campos del post
+    fields:
+      # Campos principales
+      - {
+          label: 'Título',
+          name: 'title',
+          widget: 'string',
+          hint: 'Título del artículo (requerido)',
+          required: true
+        }
+      
+      - {
+          label: 'Extracto',
+          name: 'excerpt',
+          widget: 'text',
+          hint: 'Resumen breve del artículo (opcional)',
+          required: false
+        }
+      
+      # Fechas
+      - {
+          label: 'Fecha de Publicación',
+          name: 'publishDate',
+          widget: 'datetime',
+          format: 'YYYY-MM-DDTHH:mm:ssZ',
+          date_format: 'DD/MM/YYYY',
+          time_format: 'HH:mm',
+          hint: 'Fecha y hora de publicación',
+          required: false
+        }
+      
+      - {
+          label: 'Fecha de Actualización',
+          name: 'updateDate',
+          widget: 'datetime',
+          format: 'YYYY-MM-DDTHH:mm:ssZ',
+          date_format: 'DD/MM/YYYY',
+          time_format: 'HH:mm',
+          hint: 'Fecha de última actualización (opcional)',
+          required: false
+        }
+      
+      # Estado
+      - {
+          label: 'Borrador',
+          name: 'draft',
+          widget: 'boolean',
+          default: true,
+          hint: 'Marcar como borrador para no publicar'
+        }
+      
+      # Imagen destacada
+      - {
+          label: 'Imagen Destacada',
+          name: 'image',
+          widget: 'image',
+          hint: 'Imagen principal del artículo',
+          required: false,
+          allow_multiple: false
+        }
+      
+      # Categorización
+      - {
+          label: 'Categoría',
+          name: 'category',
+          widget: 'select',
+          options: [
+            'arcotechos',
+            'estructuras-metalicas',
+            'construccion-industrial',
+            'gruas-equipos',
+            'proyectos',
+            'noticias'
+          ],
+          hint: 'Categoría principal del artículo',
+          required: false
+        }
+      
+      - {
+          label: 'Etiquetas',
+          name: 'tags',
+          widget: 'list',
+          allow_add: true,
+          collapsed: false,
+          field: { label: 'Tag', name: 'tag', widget: 'string' },
+          hint: 'Etiquetas para clasificar el contenido',
+          required: false
+        }
+      
+      # Autor
+      - {
+          label: 'Autor',
+          name: 'author',
+          widget: 'string',
+          default: 'Equipo Arcodisic',
+          hint: 'Nombre del autor del artículo',
+          required: false
+        }
+      
+      # Metadata SEO (opcional pero recomendado)
+      - label: 'Metadata SEO'
+        name: 'metadata'
+        widget: 'object'
+        collapsed: true
+        required: false
+        fields:
+          - {
+              label: 'Título SEO',
+              name: 'title',
+              widget: 'string',
+              required: false,
+              hint: 'Título optimizado para SEO (si es diferente al título principal)'
+            }
+          - {
+              label: 'Descripción SEO',
+              name: 'description',
+              widget: 'text',
+              required: false,
+              hint: 'Descripción para motores de búsqueda'
+            }
+          - {
+              label: 'URL Canónica',
+              name: 'canonical',
+              widget: 'string',
+              required: false,
+              hint: 'URL canónica completa (ej: https://arcodisic.com.mx/nombre-post)'
+            }
+      
+      # Contenido del post
+      - {
+          label: 'Contenido',
+          name: 'body',
+          widget: 'markdown',
+          hint: 'Contenido principal del artículo en Markdown',
+          required: true
+        }
