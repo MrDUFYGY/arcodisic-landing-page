@@ -9,15 +9,37 @@
     <!-- Netlify Identity Widget (solo en producción) -->
     <script>
       (function() {
+        function initializeIdentity() {
+          var identity = window.netlifyIdentity;
+          if (!identity) {
+            return;
+          }
+
+          identity.on('init', function(user) {
+            if (!user) {
+              identity.open('login');
+            }
+          });
+
+          identity.on('login', function() {
+            document.location.href = '/admin/';
+          });
+        }
+
         // Solo cargar Netlify Identity en producción
         var isProduction = window.location.hostname !== 'localhost' && 
                             window.location.hostname !== '127.0.0.1';
-        
+
         if (isProduction) {
-          var script = document.createElement('script');
-          script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
-          script.async = true;
-          document.head.appendChild(script);
+          if (window.netlifyIdentity) {
+            initializeIdentity();
+          } else {
+            var script = document.createElement('script');
+            script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+            script.async = true;
+            script.onload = initializeIdentity;
+            document.head.appendChild(script);
+          }
         }
       })();
     </script>
@@ -26,22 +48,6 @@
     <!-- DecapCMS -->
     <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
     
-    <!-- Netlify Identity: solo en producción -->
-    <script>
-      (function() {
-        var isProduction = window.location.hostname !== 'localhost' && 
-                            window.location.hostname !== '127.0.0.1';
-        
-        if (isProduction && window.netlifyIdentity) {
-          window.netlifyIdentity.on("init", function(user) {
-            if (!user) {
-              window.netlifyIdentity.on("login", function() {
-                document.location.href = "/admin/";
-              });
-            }
-          });
-        }
-      })();
-    </script>
+    <!-- Netlify Identity sólo se inicializa mediante el script anterior -->
   </body>
 </html>
