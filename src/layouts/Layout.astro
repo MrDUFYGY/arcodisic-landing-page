@@ -94,29 +94,30 @@ const { language, textDirection } = I18N;
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
       (function () {
-        const identity = (window as any).netlifyIdentity;
-        if (!identity) return;
-        const hasIdentityToken = /(?:invite_token|confirmation_token|recovery_token|access_token)=/.test(location.hash);
-
-        // If the URL contains an Identity token hash, open the widget so user can complete flow
-        if (hasIdentityToken) {
-          identity.open('login');
+        // Detectar tokens de invitación/recuperación en la URL
+        const hasIdentityToken = /(?:invite_token|confirmation_token|recovery_token)=/.test(location.hash);
+        
+        // Si hay un token, redirigir a la página de setup
+        if (hasIdentityToken && !location.pathname.includes('/admin/setup-password')) {
+          window.location.href = '/admin/setup-password' + location.hash;
+          return;
         }
 
-        // After login / password recovery / confirmation, send user to the CMS
-        const gotoCMS = () => {
-          try { location.hash = ''; } catch (e) { console.debug('Identity: could not clear URL hash', e); }
-          window.location.href = '/admin/';
-        };
+        // Solo en producción: configurar eventos de Netlify Identity
+        const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        if (!isLocalhost) {
+          const identity = (window as any).netlifyIdentity;
+          if (!identity) return;
 
-        identity.on('login', gotoCMS);
-        identity.on('signup', gotoCMS);
-        identity.on('init', (user: any) => {
-          // If user already logged in and came from a token flow, go to CMS
-          if (user && hasIdentityToken) gotoCMS();
-        });
-        // Some clients emit 'recover' on password recovery complete
-        identity.on && identity.on('recover', gotoCMS);
+          // Después de login exitoso, ir al CMS
+          const gotoCMS = () => {
+            try { location.hash = ''; } catch (e) { console.debug('Identity: could not clear URL hash', e); }
+            window.location.href = '/admin/';
+          };
+
+          identity.on('login', gotoCMS);
+          identity.on('signup', gotoCMS);
+        }
       })();
     </script>
 
