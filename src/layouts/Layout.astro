@@ -90,33 +90,15 @@ const { language, textDirection } = I18N;
       }
     </script>
 
-    <!-- Netlify Identity: handle invite/recovery/login tokens anywhere on the site -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Netlify Identity: solo detectar tokens y redirigir -->
     <script>
       (function () {
         // Detectar tokens de invitación/recuperación en la URL
         const hasIdentityToken = /(?:invite_token|confirmation_token|recovery_token)=/.test(location.hash);
         
-        // Si hay un token, redirigir a la página de setup
+        // Si hay un token y no estamos ya en setup-password, redirigir
         if (hasIdentityToken && !location.pathname.includes('/admin/setup-password')) {
-          window.location.href = '/admin/setup-password' + location.hash;
-          return;
-        }
-
-        // Solo en producción: configurar eventos de Netlify Identity
-        const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-        if (!isLocalhost) {
-          const identity = (window as any).netlifyIdentity;
-          if (!identity) return;
-
-          // Después de login exitoso, ir al CMS
-          const gotoCMS = () => {
-            try { location.hash = ''; } catch (e) { console.debug('Identity: could not clear URL hash', e); }
-            window.location.href = '/admin/';
-          };
-
-          identity.on('login', gotoCMS);
-          identity.on('signup', gotoCMS);
+          window.location.replace('/admin/setup-password' + location.hash);
         }
       })();
     </script>

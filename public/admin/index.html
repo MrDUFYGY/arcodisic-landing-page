@@ -6,24 +6,42 @@
     <meta name="robots" content="noindex" />
     <title>Arcodisic - Administrador de Contenido</title>
     
-    <!-- Netlify Identity Widget (solo se usa en producción) -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Netlify Identity Widget (solo en producción) -->
+    <script>
+      (function() {
+        // Solo cargar Netlify Identity en producción
+        var isProduction = window.location.hostname !== 'localhost' && 
+                            window.location.hostname !== '127.0.0.1';
+        
+        if (isProduction) {
+          var script = document.createElement('script');
+          script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+          script.async = true;
+          document.head.appendChild(script);
+        }
+      })();
+    </script>
   </head>
   <body>
     <!-- DecapCMS -->
     <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
     
-    <!-- Netlify Identity redirect script -->
+    <!-- Netlify Identity: solo en producción -->
     <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
-        });
-      }
+      (function() {
+        var isProduction = window.location.hostname !== 'localhost' && 
+                            window.location.hostname !== '127.0.0.1';
+        
+        if (isProduction && window.netlifyIdentity) {
+          window.netlifyIdentity.on("init", function(user) {
+            if (!user) {
+              window.netlifyIdentity.on("login", function() {
+                document.location.href = "/admin/";
+              });
+            }
+          });
+        }
+      })();
     </script>
   </body>
 </html>
