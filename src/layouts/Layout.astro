@@ -90,14 +90,15 @@ const { language, textDirection } = I18N;
       }
     </script>
 
-    <!-- Netlify Identity: solo detectar tokens y redirigir -->
-    <script>
+    <!-- Netlify Identity: detectar tokens y redirigir a setup-password -->
+    <script is:inline>
       (function () {
-        // Detectar tokens de invitación/recuperación en la URL
-        const hasIdentityToken = /(?:invite_token|confirmation_token|recovery_token)=/.test(location.hash);
+        // Detectar tokens de invitación/recuperación/confirmación en la URL
+        var hasIdentityToken = /(?:invite_token|confirmation_token|recovery_token)=/.test(location.hash);
         
         // Si hay un token y no estamos ya en setup-password, redirigir
-        if (hasIdentityToken && !location.pathname.includes('/admin/setup-password')) {
+        if (hasIdentityToken && location.pathname.indexOf('/admin/setup-password') === -1) {
+          console.log('🔑 Token detectado, redirigiendo a setup-password...');
           window.location.replace('/admin/setup-password' + location.hash);
         }
       })();

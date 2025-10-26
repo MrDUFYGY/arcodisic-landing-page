@@ -1,0 +1,103 @@
+---
+// Página principal del CMS - DecapCMS
+// Esta es la página real donde se carga el editor de contenido
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Arcodisic - Editor CMS</title>
+    
+    <!-- Netlify Identity Widget: Solo en producción -->
+    <script is:inline>
+      (function() {
+        // Detectar si estamos en producción
+        var isProduction = window.location.hostname !== 'localhost' && 
+                          window.location.hostname !== '127.0.0.1';
+        
+        if (!isProduction) {
+          console.log('🔧 Modo LOCAL: Netlify Identity deshabilitado');
+          console.log('📝 Asegúrate de ejecutar: npm run cms:local');
+          return;
+        }
+
+        console.log('🌐 Modo PRODUCCIÓN: Cargando Netlify Identity...');
+
+        // Función para inicializar Netlify Identity
+        function initNetlifyIdentity() {
+          var identity = window.netlifyIdentity;
+          
+          if (!identity) {
+            console.error('❌ Netlify Identity no está disponible');
+            return;
+          }
+
+          console.log('✅ Netlify Identity cargado');
+
+          // Evento: Usuario inicializado
+          identity.on('init', function(user) {
+            console.log('🔄 Identity init:', user ? '✅ Usuario autenticado' : '❌ Sin usuario');
+            
+            if (!user) {
+              // Si no hay usuario, abrir modal de login
+              console.log('🔓 Abriendo modal de login...');
+              identity.open('login');
+            } else {
+              console.log('👤 Usuario:', user.email);
+            }
+          });
+
+          // Evento: Usuario hizo login
+          identity.on('login', function(user) {
+            console.log('✅ Login exitoso:', user.email);
+            // No redirigir, dejar que DecapCMS se cargue
+          });
+
+          // Evento: Usuario hizo logout
+          identity.on('logout', function() {
+            console.log('👋 Logout - Redirigiendo...');
+            window.location.href = '/admin';
+          });
+
+          // Evento: Error
+          identity.on('error', function(err) {
+            console.error('❌ Identity Error:', err);
+          });
+        }
+
+        // Cargar el script de Netlify Identity si estamos en producción
+        if (isProduction) {
+          if (window.netlifyIdentity) {
+            // Ya está cargado (posiblemente desde otro script)
+            initNetlifyIdentity();
+          } else {
+            // Cargar dinámicamente
+            var script = document.createElement('script');
+            script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+            script.async = true;
+            script.onload = function() {
+              console.log('📦 Script de Netlify Identity cargado');
+              initNetlifyIdentity();
+            };
+            script.onerror = function() {
+              console.error('❌ Error al cargar Netlify Identity');
+            };
+            document.head.appendChild(script);
+          }
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- DecapCMS: Editor de contenido -->
+    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    
+    <script is:inline>
+      console.log('📝 DecapCMS cargado');
+      console.log('📂 Configuración: /admin/config.yml');
+    </script>
+  </body>
+</html>
