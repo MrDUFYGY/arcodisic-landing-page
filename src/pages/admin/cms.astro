@@ -10,6 +10,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Arcodisic - Editor CMS</title>
+
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      
+      /* Modo oscuro para DecapCMS */
+      body {
+        background: #0f172a !important;
+        color: #f1f5f9 !important;
+      }
+      
+      /* Personalizar interfaz del CMS */
+      .nc-app-header {
+        background: #1e293b !important;
+        border-bottom: 1px solid #334155 !important;
+      }
+      
+      .nc-app-sidebar {
+        background: #1e293b !important;
+        border-right: 1px solid #334155 !important;
+      }
+      
+      .nc-workflowList {
+        background: #0f172a !important;
+      }
+      
+      .nc-entryListing-card {
+        background: #1e293b !important;
+        border: 1px solid #334155 !important;
+      }
+      
+      .nc-entryListing-card:hover {
+        background: #334155 !important;
+      }
+      
+      /* Alerta de errores */
+      .identity-alert {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        padding: 16px 20px;
+        border-radius: 12px;
+        background: rgba(220, 38, 38, 0.95);
+        color: white;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        box-shadow: 0 20px 45px rgba(220, 38, 38, 0.3);
+        max-width: 320px;
+        display: none;
+        z-index: 9999;
+      }
+      
+      .identity-alert.show {
+        display: block;
+      }
+      
+      .identity-alert strong {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      
+      .identity-alert button {
+        margin-top: 12px;
+        border: none;
+        background: rgba(255, 255, 255, 0.25);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+      
+      .identity-alert button:hover {
+        background: rgba(255, 255, 255, 0.35);
+      }
+    </style>
     
     <!-- Netlify Identity Widget: Solo en producción -->
     <script is:inline>
@@ -26,12 +103,29 @@
 
         console.log('🌐 Modo PRODUCCIÓN: Cargando Netlify Identity...');
 
+        // Función para mostrar alertas
+        function showAlert(message) {
+          var alertEl = document.querySelector('.identity-alert');
+          if (!alertEl) return;
+
+          alertEl.querySelector('span').textContent = message;
+          alertEl.classList.add('show');
+
+          var closeBtn = alertEl.querySelector('button');
+          if (closeBtn) {
+            closeBtn.onclick = function() {
+              alertEl.classList.remove('show');
+            };
+          }
+        }
+        
         // Función para inicializar Netlify Identity
         function initNetlifyIdentity() {
           var identity = window.netlifyIdentity;
           
           if (!identity) {
             console.error('❌ Netlify Identity no está disponible');
+            showAlert('No pudimos cargar Netlify Identity. Revisa tu conexión.');
             return;
           }
 
@@ -47,13 +141,19 @@
               identity.open('login');
             } else {
               console.log('👤 Usuario:', user.email);
+              // Inicializar DecapCMS después del login
+              initDecapCMS();
             }
           });
 
           // Evento: Usuario hizo login
           identity.on('login', function(user) {
             console.log('✅ Login exitoso:', user.email);
-            // No redirigir, dejar que DecapCMS se cargue
+            // Cerrar modal y recargar para inicializar CMS
+            identity.close();
+            setTimeout(function() {
+              window.location.reload();
+            }, 500);
           });
 
           // Evento: Usuario hizo logout
@@ -65,6 +165,7 @@
           // Evento: Error
           identity.on('error', function(err) {
             console.error('❌ Identity Error:', err);
+            showAlert(err && err.message ? err.message : 'Ocurrió un error con Netlify Identity.');
           });
         }
 
@@ -84,6 +185,7 @@
             };
             script.onerror = function() {
               console.error('❌ Error al cargar Netlify Identity');
+              showAlert('No se pudo cargar Netlify Identity. Intenta refrescar la página.');
             };
             document.head.appendChild(script);
           }
@@ -92,12 +194,71 @@
     </script>
   </head>
   <body>
+    <div class="identity-alert" role="alert" aria-live="assertive">
+      <strong>⚠️ Error de autenticación</strong>
+      <span></span>
+      <button type="button">Cerrar</button>
+    </div>
+
     <!-- DecapCMS: Editor de contenido -->
     <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
     
     <script is:inline>
-      console.log('📝 DecapCMS cargado');
-      console.log('📂 Configuración: /admin/config.yml');
+      function initDecapCMS() {
+        if (!window.CMS) {
+          console.error('DecapCMS no está disponible.');
+          return;
+        }
+        
+        console.log('📝 DecapCMS inicializando...');
+        console.log('📂 Configuración: /admin/config.yml');
+        
+        CMS.init();
+        
+        // Personalizar interfaz
+        setTimeout(function() {
+          // Cambiar logo
+          var logo = document.querySelector('.nc-githubAuthenticationPage-logo img, .nc-app-header img');
+          if (logo) {
+            logo.src = '/favicon.svg';
+            logo.alt = 'Arcodisic';
+            logo.style.maxWidth = '180px';
+          }
+          
+          // Cambiar títulos
+          var title = document.querySelector('.nc-githubAuthenticationPage h1');
+          if (title) {
+            title.textContent = 'Arcodisic CMS';
+          }
+          
+          var subtitle = document.querySelector('.nc-githubAuthenticationPage h2');
+          if (subtitle) {
+            subtitle.textContent = 'Inicia sesión para administrar el contenido';
+          }
+        }, 1000);
+      }
+      
+      // Inicializar CMS solo en local o si ya hay usuario autenticado
+      var isProduction = window.location.hostname !== 'localhost' && 
+                        window.location.hostname !== '127.0.0.1';
+      
+      if (!isProduction) {
+        // En local, inicializar inmediatamente
+        initDecapCMS();
+      } else {
+        // En producción, esperar a que Identity esté listo
+        var checkUser = setInterval(function() {
+          if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
+            clearInterval(checkUser);
+            initDecapCMS();
+          }
+        }, 500);
+        
+        // Timeout de 10 segundos
+        setTimeout(function() {
+          clearInterval(checkUser);
+        }, 10000);
+      }
     </script>
   </body>
 </html>
