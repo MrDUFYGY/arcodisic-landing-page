@@ -1,2 +1,19 @@
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Bloquear indexación del panel de administrador
+/admin/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Cache-Control: no-cache, no-store, must-revalidate, private
+  Pragma: no-cache
+
+/decapcms/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Cache-Control: no-cache, no-store, must-revalidate, private
+  Pragma: no-cache

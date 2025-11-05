@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+    <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
     <title>Arcodisic - Administrador de Contenido</title>
     
     <!-- Preload critical resources -->
@@ -256,9 +258,9 @@
           document.head.appendChild(identityScript);
         }
         
-        // Cargar Decap CMS
+        // Cargar Decap CMS con timestamp para evitar cache
         const cmsScript = document.createElement('script');
-        cmsScript.src = 'https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js';
+        cmsScript.src = 'https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js?v=' + Date.now();
         cmsScript.async = true;
         cmsScript.onload = initializeCMS;
         cmsScript.onerror = () => {

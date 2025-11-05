@@ -11,8 +11,8 @@ backend:
 local_backend: true
 
 # Configuración de sitio
-site_url: https://arcodisic.netlify.app
-display_url: https://arcodisic.netlify.app
+site_url: https://arcodisic.com.mx
+display_url: https://arcodisic.com.mx
 
 # Media files configuration
 media_folder: 'src/assets/images/blog' # Ruta donde se guardarán las imágenes

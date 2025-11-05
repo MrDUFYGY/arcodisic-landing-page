@@ -1,12 +1,55 @@
 /* Estilos personalizados para Decap CMS - Arcodisic */
 
-/* Variables CSS para consistencia */
+/* Variables CSS para consistencia - Paleta mejorada con mejor contraste */
 :root {
-  --arcodisic-primary: #667eea;
-  --arcodisic-secondary: #764ba2;
-  --arcodisic-accent: #f093fb;
-  --arcodisic-text: #2d3748;
-  --arcodisic-bg: #f7fafc;
+  /* Colores principales */
+  --arcodisic-primary: #4f46e5;        /* Indigo 600 - Mejor contraste */
+  --arcodisic-primary-dark: #3730a3;   /* Indigo 700 */
+  --arcodisic-primary-light: #6366f1;  /* Indigo 500 */
+  
+  /* Colores secundarios */
+  --arcodisic-secondary: #7c3aed;      /* Violet 600 */
+  --arcodisic-secondary-dark: #5b21b6; /* Violet 700 */
+  --arcodisic-secondary-light: #8b5cf6; /* Violet 500 */
+  
+  /* Colores de acento */
+  --arcodisic-accent: #ec4899;         /* Pink 500 */
+  --arcodisic-accent-dark: #db2777;    /* Pink 600 */
+  --arcodisic-accent-light: #f472b6;   /* Pink 400 */
+  
+  /* Colores de texto */
+  --arcodisic-text-primary: #111827;   /* Gray 900 - Máximo contraste */
+  --arcodisic-text-secondary: #374151; /* Gray 700 */
+  --arcodisic-text-muted: #6b7280;     /* Gray 500 */
+  --arcodisic-text-inverse: #ffffff;   /* Blanco */
+  
+  /* Colores de fondo */
+  --arcodisic-bg-primary: #ffffff;     /* Blanco puro */
+  --arcodisic-bg-secondary: #f9fafb;   /* Gray 50 */
+  --arcodisic-bg-tertiary: #f3f4f6;    /* Gray 100 */
+  --arcodisic-bg-dark: #1f2937;        /* Gray 800 */
+  
+  /* Colores de estado */
+  --arcodisic-success: #059669;        /* Emerald 600 */
+  --arcodisic-warning: #d97706;        /* Amber 600 */
+  --arcodisic-error: #dc2626;          /* Red 600 */
+  --arcodisic-info: #2563eb;           /* Blue 600 */
+  
+  /* Sombras */
+  --arcodisic-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --arcodisic-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --arcodisic-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --arcodisic-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Bordes */
+  --arcodisic-border-light: #e5e7eb;   /* Gray 200 */
+  --arcodisic-border-medium: #d1d5db;  /* Gray 300 */
+  --arcodisic-border-dark: #9ca3af;    /* Gray 400 */
+  
+  /* Transiciones */
+  --arcodisic-transition-fast: 0.15s ease-out;
+  --arcodisic-transition-normal: 0.2s ease-out;
+  --arcodisic-transition-slow: 0.3s ease-out;
 }
 
 /* Personalización del login */
@@ -25,13 +68,14 @@
   font-size: 2rem !important;
   font-weight: 600 !important;
   margin-bottom: 0.5rem !important;
+  text-shadow: var(--arcodisic-shadow-sm);
 }
 
 .nc-githubAuthenticationPage h2 {
-  color: var(--arcodisic-text) !important;
+  color: var(--arcodisic-text-secondary) !important;
   font-size: 1.1rem !important;
   font-weight: 400 !important;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 /* Botones del CMS */
@@ -42,27 +86,38 @@
   border-radius: 8px !important;
   padding: 12px 24px !important;
   font-weight: 500 !important;
-  transition: all 0.2s ease !important;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+  color: var(--arcodisic-text-inverse) !important;
+  transition: all var(--arcodisic-transition-normal) !important;
+  box-shadow: var(--arcodisic-shadow-md) !important;
+  cursor: pointer !important;
 }
 
 .nc-githubAuthenticationPage button:hover,
 .css-1x6tnj5:hover {
+  background: linear-gradient(135deg, var(--arcodisic-primary-dark) 0%, var(--arcodisic-secondary-dark) 100%) !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+  box-shadow: var(--arcodisic-shadow-lg) !important;
+}
+
+.nc-githubAuthenticationPage button:focus,
+.css-1x6tnj5:focus {
+  outline: 2px solid var(--arcodisic-primary-light) !important;
+  outline-offset: 2px !important;
 }
 
 /* Sidebar del CMS */
 .css-v758ki {
-  background: linear-gradient(180deg, var(--arcodisic-bg) 0%, #ffffff 100%) !important;
-  border-right: 1px solid #e2e8f0 !important;
+  background: linear-gradient(180deg, var(--arcodisic-bg-secondary) 0%, var(--arcodisic-bg-primary) 100%) !important;
+  border-right: 1px solid var(--arcodisic-border-light) !important;
+  box-shadow: var(--arcodisic-shadow-sm) !important;
 }
 
 /* Header del CMS */
 .css-1x9cshv {
-  background: white !important;
-  border-bottom: 1px solid #e2e8f0 !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  background: var(--arcodisic-bg-primary) !important;
+  border-bottom: 1px solid var(--arcodisic-border-light) !important;
+  box-shadow: var(--arcodisic-shadow-sm) !important;
+  color: var(--arcodisic-text-primary) !important;
 }
 
 /* Botones de acción principales */
@@ -71,66 +126,106 @@
   background: linear-gradient(135deg, var(--arcodisic-primary) 0%, var(--arcodisic-secondary) 100%) !important;
   border: none !important;
   border-radius: 6px !important;
-  color: white !important;
+  color: var(--arcodisic-text-inverse) !important;
   font-weight: 500 !important;
-  transition: all 0.2s ease !important;
+  transition: all var(--arcodisic-transition-normal) !important;
+  box-shadow: var(--arcodisic-shadow-sm) !important;
 }
 
 .css-1hwfws3:hover,
 .css-14jk2my:hover {
+  background: linear-gradient(135deg, var(--arcodisic-primary-dark) 0%, var(--arcodisic-secondary-dark) 100%) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+  box-shadow: var(--arcodisic-shadow-md) !important;
+}
+
+.css-1hwfws3:focus,
+.css-14jk2my:focus {
+  outline: 2px solid var(--arcodisic-primary-light) !important;
+  outline-offset: 2px !important;
 }
 
 /* Cards de entradas */
 .css-1ih0g8s {
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid var(--arcodisic-border-light) !important;
   border-radius: 12px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
-  transition: all 0.2s ease !important;
+  box-shadow: var(--arcodisic-shadow-sm) !important;
+  transition: all var(--arcodisic-transition-normal) !important;
+  background: var(--arcodisic-bg-primary) !important;
 }
 
 .css-1ih0g8s:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: var(--arcodisic-shadow-md) !important;
   border-color: var(--arcodisic-primary) !important;
 }
 
 /* Editor de contenido */
 .css-1x1y2kg {
   border-radius: 8px !important;
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid var(--arcodisic-border-light) !important;
+  background: var(--arcodisic-bg-primary) !important;
 }
 
 /* Inputs y campos de formulario */
 .css-1x1y2kg input,
 .css-1x1y2kg textarea,
 .css-1x1y2kg select {
-  border: 1px solid #e2e8f0 !important;
+  border: 1px solid var(--arcodisic-border-light) !important;
   border-radius: 6px !important;
   padding: 8px 12px !important;
-  transition: border-color 0.2s ease !important;
+  transition: all var(--arcodisic-transition-fast) !important;
+  background: var(--arcodisic-bg-primary) !important;
+  color: var(--arcodisic-text-primary) !important;
 }
 
 .css-1x1y2kg input:focus,
 .css-1x1y2kg textarea:focus,
 .css-1x1y2kg select:focus {
   border-color: var(--arcodisic-primary) !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
   outline: none !important;
+}
+
+.css-1x1y2kg input:hover,
+.css-1x1y2kg textarea:hover,
+.css-1x1y2kg select:hover {
+  border-color: var(--arcodisic-border-medium) !important;
 }
 
 /* Preview del contenido */
 .css-1dbjc4n {
-  background: var(--arcodisic-bg) !important;
+  background: var(--arcodisic-bg-secondary) !important;
   border-radius: 8px !important;
   padding: 1rem !important;
+  border: 1px solid var(--arcodisic-border-light) !important;
 }
 
 /* Mensajes de estado */
 .css-1x9cshv .css-1dbjc4n {
   border-radius: 6px !important;
   padding: 8px 16px !important;
+}
+
+/* Estados de éxito, advertencia y error */
+.css-success {
+  background: var(--arcodisic-success) !important;
+  color: var(--arcodisic-text-inverse) !important;
+}
+
+.css-warning {
+  background: var(--arcodisic-warning) !important;
+  color: var(--arcodisic-text-inverse) !important;
+}
+
+.css-error {
+  background: var(--arcodisic-error) !important;
+  color: var(--arcodisic-text-inverse) !important;
+}
+
+.css-info {
+  background: var(--arcodisic-info) !important;
+  color: var(--arcodisic-text-inverse) !important;
 }
 
 /* Personalización de scrollbars */
@@ -140,17 +235,18 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--arcodisic-bg-tertiary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, var(--arcodisic-primary) 0%, var(--arcodisic-secondary) 100%);
   border-radius: 4px;
+  transition: background var(--arcodisic-transition-fast);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--arcodisic-secondary);
+  background: linear-gradient(135deg, var(--arcodisic-primary-dark) 0%, var(--arcodisic-secondary-dark) 100%);
 }
 
 /* Responsive adjustments */
@@ -193,18 +289,156 @@
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   :root {
-    --arcodisic-bg: #1a202c;
-    --arcodisic-text: #e2e8f0;
+    /* Colores de texto en modo oscuro */
+    --arcodisic-text-primary: #f9fafb;   /* Gray 50 */
+    --arcodisic-text-secondary: #e5e7eb; /* Gray 200 */
+    --arcodisic-text-muted: #9ca3af;     /* Gray 400 */
+    
+    /* Colores de fondo en modo oscuro */
+    --arcodisic-bg-primary: #111827;     /* Gray 900 */
+    --arcodisic-bg-secondary: #1f2937;   /* Gray 800 */
+    --arcodisic-bg-tertiary: #374151;    /* Gray 700 */
+    
+    /* Bordes en modo oscuro */
+    --arcodisic-border-light: #374151;   /* Gray 700 */
+    --arcodisic-border-medium: #4b5563;  /* Gray 600 */
+    --arcodisic-border-dark: #6b7280;    /* Gray 500 */
   }
   
   .css-v758ki {
-    background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%) !important;
-    color: var(--arcodisic-text) !important;
+    background: linear-gradient(180deg, var(--arcodisic-bg-secondary) 0%, var(--arcodisic-bg-primary) 100%) !important;
+    color: var(--arcodisic-text-primary) !important;
   }
   
   .css-1x9cshv {
-    background: #2d3748 !important;
-    border-bottom-color: #4a5568 !important;
-    color: var(--arcodisic-text) !important;
+    background: var(--arcodisic-bg-primary) !important;
+    border-bottom-color: var(--arcodisic-border-light) !important;
+    color: var(--arcodisic-text-primary) !important;
   }
+  
+  .css-1ih0g8s {
+    background: var(--arcodisic-bg-secondary) !important;
+    color: var(--arcodisic-text-primary) !important;
+  }
+  
+  .css-1x1y2kg input,
+  .css-1x1y2kg textarea,
+  .css-1x1y2kg select {
+    background: var(--arcodisic-bg-secondary) !important;
+    color: var(--arcodisic-text-primary) !important;
+  }
+}
+
+/* Estilos adicionales para mejorar la interfaz */
+
+/* Navegación y menús */
+.css-nav-item {
+  transition: all var(--arcodisic-transition-fast) !important;
+  border-radius: 6px !important;
+  margin: 2px 0 !important;
+}
+
+.css-nav-item:hover {
+  background: var(--arcodisic-bg-tertiary) !important;
+  color: var(--arcodisic-primary) !important;
+}
+
+.css-nav-item.active {
+  background: var(--arcodisic-primary) !important;
+  color: var(--arcodisic-text-inverse) !important;
+}
+
+/* Tooltips */
+.css-tooltip {
+  background: var(--arcodisic-bg-dark) !important;
+  color: var(--arcodisic-text-inverse) !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-size: 0.875rem !important;
+  box-shadow: var(--arcodisic-shadow-lg) !important;
+}
+
+/* Modales y overlays */
+.css-modal-overlay {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.css-modal {
+  background: var(--arcodisic-bg-primary) !important;
+  border-radius: 12px !important;
+  box-shadow: var(--arcodisic-shadow-xl) !important;
+  border: 1px solid var(--arcodisic-border-light) !important;
+}
+
+/* Badges y etiquetas */
+.css-badge {
+  background: var(--arcodisic-primary) !important;
+  color: var(--arcodisic-text-inverse) !important;
+  border-radius: 12px !important;
+  padding: 4px 8px !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+}
+
+.css-badge.success {
+  background: var(--arcodisic-success) !important;
+}
+
+.css-badge.warning {
+  background: var(--arcodisic-warning) !important;
+}
+
+.css-badge.error {
+  background: var(--arcodisic-error) !important;
+}
+
+/* Mejoras de accesibilidad */
+.css-focus-visible:focus-visible {
+  outline: 2px solid var(--arcodisic-primary) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px !important;
+}
+
+/* Mejoras específicas para el editor de markdown */
+.css-markdown-editor {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+  line-height: 1.6 !important;
+}
+
+.css-markdown-preview {
+  line-height: 1.7 !important;
+  color: var(--arcodisic-text-primary) !important;
+}
+
+.css-markdown-preview h1,
+.css-markdown-preview h2,
+.css-markdown-preview h3,
+.css-markdown-preview h4,
+.css-markdown-preview h5,
+.css-markdown-preview h6 {
+  color: var(--arcodisic-primary) !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.css-markdown-preview code {
+  background: var(--arcodisic-bg-tertiary) !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+  font-size: 0.875em !important;
+}
+
+.css-markdown-preview pre {
+  background: var(--arcodisic-bg-tertiary) !important;
+  padding: 1rem !important;
+  border-radius: 6px !important;
+  overflow-x: auto !important;
+}
+
+.css-markdown-preview blockquote {
+  border-left: 4px solid var(--arcodisic-primary) !important;
+  padding-left: 1rem !important;
+  margin-left: 0 !important;
+  color: var(--arcodisic-text-secondary) !important;
 }
