@@ -5,157 +5,276 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
     <title>Arcodisic - Administrador de Contenido</title>
-
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js" as="script" />
+    
     <style>
       :root {
         color-scheme: light dark;
       }
-      .identity-alert {
-        position: fixed;
-        top: 16px;
-        right: 16px;
-        padding: 16px 20px;
-        border-radius: 12px;
-        background: rgba(220, 38, 38, 0.95);
-        color: white;
+      
+      body {
+        margin: 0;
+        padding: 0;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        box-shadow: 0 20px 45px rgba(220, 38, 38, 0.3);
-        max-width: 320px;
+      }
+      
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        opacity: 1;
+        transition: opacity 0.5s ease-out;
+      }
+      
+      .loading-screen.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .loading-content {
+        text-align: center;
+        color: white;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .error-alert {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 20px;
+        border-radius: 8px;
+        background: #dc2626;
+        color: white;
+        box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+        max-width: 350px;
         display: none;
         z-index: 9999;
+        font-size: 14px;
       }
-      .identity-alert.show {
+      
+      .error-alert.show {
         display: block;
+        animation: slideIn 0.3s ease-out;
       }
-      .identity-alert strong {
+      
+      .error-alert strong {
         display: block;
+        margin-bottom: 8px;
         font-size: 16px;
-        margin-bottom: 6px;
       }
-      .identity-alert button {
+      
+      .error-alert button {
         margin-top: 12px;
         border: none;
-        background: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.2);
         color: white;
-        padding: 6px 10px;
-        border-radius: 6px;
+        padding: 8px 12px;
+        border-radius: 4px;
         cursor: pointer;
         font-size: 12px;
+        transition: background 0.2s;
       }
-      .identity-alert button:hover {
-        background: rgba(255, 255, 255, 0.35);
+      
+      .error-alert button:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
       }
     </style>
-
-    <!-- Netlify Identity Widget (solo en producción) -->
-    <script>
-      (function() {
-        function showAlert(message) {
-          var alertEl = document.querySelector('.identity-alert');
-          if (!alertEl) return;
-
-          alertEl.querySelector('span').textContent = message;
-          alertEl.classList.add('show');
-
-          var closeBtn = alertEl.querySelector('button');
-          if (closeBtn) {
-            closeBtn.onclick = function() {
-              alertEl.classList.remove('show');
-            };
-          }
-        }
-
-        function initializeIdentity() {
-          var identity = window.netlifyIdentity;
-          if (!identity) {
-            showAlert('No pudimos cargar Netlify Identity. Revisa tu conexión.');
-            return;
-          }
-
-          identity.on('init', function(user) {
-            if (!user) {
-              identity.open('login');
-            }
-          });
-
-          identity.on('login', function() {
-            document.location.href = '/admin/';
-          });
-
-          identity.on('error', function(err) {
-            console.error('Identity error:', err);
-            showAlert(err && err.message ? err.message : 'Ocurrió un error con Netlify Identity.');
-          });
-        }
-
-        // Solo cargar Netlify Identity en producción
-        var isProduction = window.location.hostname !== 'localhost' && 
-                            window.location.hostname !== '127.0.0.1';
-
-        if (isProduction) {
-          if (window.netlifyIdentity) {
-            initializeIdentity();
-          } else {
-            var script = document.createElement('script');
-            script.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
-            script.async = true;
-            script.onload = initializeIdentity;
-            script.onerror = function() {
-              showAlert('No se pudo cargar Netlify Identity. Intenta refrescar la página.');
-            };
-            document.head.appendChild(script);
-          }
-        }
-      })();
-    </script>
   </head>
   <body>
-    <div class="identity-alert" role="alert" aria-live="assertive">
-      <strong>⚠️ Error de autenticación</strong>
-      <span></span>
-      <button type="button">Cerrar</button>
+    <!-- Loading screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h2>Cargando Arcodisic CMS</h2>
+        <p>Preparando el administrador de contenido...</p>
+      </div>
+    </div>
+    
+    <!-- Error alert -->
+    <div id="error-alert" class="error-alert" role="alert" aria-live="assertive">
+      <strong>⚠️ Error</strong>
+      <span id="error-message"></span>
+      <button type="button" onclick="this.parentElement.classList.remove('show')">Cerrar</button>
     </div>
 
-    <!-- DecapCMS -->
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
-
+    <!-- Netlify Identity (solo en producción) -->
     <script>
+      window.CMS_MANUAL_INIT = true;
+      
       (function() {
-        if (!window.CMS) {
-          console.error('Decap CMS no está disponible.');
-          return;
-        }
-
-        CMS.init();
-
-        CMS.registerPreviewStyle('/styles/cms.css');
-        CMS.registerEventListener({
-          name: 'preSave',
-          handler: function(event) {
-            console.log('Guardando entrada:', event.entry.get('title'));
+        const isProduction = !['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+        const loadingScreen = document.getElementById('loading-screen');
+        
+        function showError(message) {
+          const errorAlert = document.getElementById('error-alert');
+          const errorMessage = document.getElementById('error-message');
+          
+          if (errorAlert && errorMessage) {
+            errorMessage.textContent = message;
+            errorAlert.classList.add('show');
           }
-        });
-
-        window.addEventListener('load', function() {
-          requestAnimationFrame(function() {
-            var logo = document.querySelector('.nc-githubAuthenticationPage-logo img');
-            if (logo) {
-              logo.src = '/logo.svg';
-              logo.alt = 'Arcodisic';
-              logo.style.maxWidth = '180px';
+          
+          console.error('CMS Error:', message);
+        }
+        
+        function hideLoading() {
+          if (loadingScreen) {
+            loadingScreen.classList.add('hide');
+            setTimeout(() => {
+              loadingScreen.style.display = 'none';
+            }, 500);
+          }
+        }
+        
+        function initializeCMS() {
+          try {
+            if (!window.CMS) {
+              throw new Error('Decap CMS no se cargó correctamente');
             }
-
-            var title = document.querySelector('.nc-githubAuthenticationPage h1');
-            if (title) {
-              title.textContent = 'Arcodisic CMS';
+            
+            // Configurar CMS
+            window.CMS.init();
+            
+            // Registrar estilos de preview si existen
+            if (document.querySelector('link[href*="cms.css"]') || 
+                fetch('/styles/cms.css').then(r => r.ok).catch(() => false)) {
+              window.CMS.registerPreviewStyle('/styles/cms.css');
             }
-
-            var subtitle = document.querySelector('.nc-githubAuthenticationPage h2');
-            if (subtitle) {
-              subtitle.textContent = 'Inicia sesión para administrar el contenido';
-            }
-          });
-        });
+            
+            // Event listeners
+            window.CMS.registerEventListener({
+              name: 'preSave',
+              handler: (event) => {
+                console.log('Guardando entrada:', event.entry?.get('title') || 'Sin título');
+              }
+            });
+            
+            hideLoading();
+            
+            // Personalización de UI (con verificación de existencia)
+            setTimeout(() => {
+              try {
+                const logo = document.querySelector('.nc-githubAuthenticationPage-logo img, [class*="logo"] img');
+                if (logo) {
+                  logo.src = '/logo.svg';
+                  logo.alt = 'Arcodisic';
+                  logo.style.maxWidth = '180px';
+                  logo.style.height = 'auto';
+                }
+                
+                const title = document.querySelector('.nc-githubAuthenticationPage h1, [class*="title"] h1, h1');
+                if (title && title.textContent.includes('Netlify')) {
+                  title.textContent = 'Arcodisic CMS';
+                }
+                
+                const subtitle = document.querySelector('.nc-githubAuthenticationPage h2, [class*="subtitle"] h2');
+                if (subtitle) {
+                  subtitle.textContent = 'Administrador de contenido';
+                }
+              } catch (uiError) {
+                console.warn('Error en personalización de UI:', uiError);
+              }
+            }, 1000);
+            
+          } catch (error) {
+            hideLoading();
+            showError(error.message || 'Error al inicializar el CMS');
+          }
+        }
+        
+        function initializeIdentity() {
+          if (!window.netlifyIdentity) {
+            showError('Netlify Identity no está disponible');
+            return;
+          }
+          
+          try {
+            window.netlifyIdentity.on('init', (user) => {
+              if (!user && isProduction) {
+                window.netlifyIdentity.open('login');
+              }
+            });
+            
+            window.netlifyIdentity.on('login', () => {
+              if (window.location.pathname !== '/admin/') {
+                window.location.href = '/admin/';
+              }
+            });
+            
+            window.netlifyIdentity.on('error', (err) => {
+              console.error('Identity error:', err);
+              showError(err?.message || 'Error de autenticación');
+            });
+            
+          } catch (error) {
+            showError('Error al configurar Netlify Identity: ' + error.message);
+          }
+        }
+        
+        // Cargar recursos
+        if (isProduction) {
+          // Cargar Netlify Identity en producción
+          const identityScript = document.createElement('script');
+          identityScript.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
+          identityScript.async = true;
+          identityScript.onload = initializeIdentity;
+          identityScript.onerror = () => showError('No se pudo cargar Netlify Identity');
+          document.head.appendChild(identityScript);
+        }
+        
+        // Cargar Decap CMS
+        const cmsScript = document.createElement('script');
+        cmsScript.src = 'https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js';
+        cmsScript.async = true;
+        cmsScript.onload = initializeCMS;
+        cmsScript.onerror = () => {
+          hideLoading();
+          showError('No se pudo cargar Decap CMS. Verifica tu conexión a internet.');
+        };
+        document.head.appendChild(cmsScript);
+        
+        // Timeout de seguridad
+        setTimeout(() => {
+          if (!window.CMS) {
+            hideLoading();
+            showError('Timeout al cargar el CMS. Intenta refrescar la página.');
+          }
+        }, 15000);
+        
       })();
     </script>
   </body>
